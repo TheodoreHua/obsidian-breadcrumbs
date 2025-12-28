@@ -5,6 +5,7 @@ import {
   addFeatherIcon,
   openView,
   wait,
+  waitForResolvedLinks,
 } from "obsidian-community-lib/dist/utils";
 import { BCAPI } from "./API";
 import { Debugger } from "src/Debugger";
@@ -37,7 +38,6 @@ import { buildClosedG, buildMainG, refreshIndex } from "./refreshIndex";
 import { RelationSuggestor } from "./RelationSuggestor";
 import { BCSettingTab } from "./Settings/BreadcrumbsSettingTab";
 import { getFields } from "./Utils/HierUtils";
-import { waitForCache } from "./Utils/ObsidianUtils";
 import DucksView from "./Views/DucksView";
 import MatrixView from "./Views/MatrixView";
 import { drawTrail } from "./Views/TrailView";
@@ -152,7 +152,7 @@ export default class BCPlugin extends Plugin {
       () => new VisModal(this).open()
     );
 
-    await waitForCache(this);
+    await waitForResolvedLinks();
     this.mainG = await buildMainG(this);
     this.closedG = buildClosedG(this);
 

@@ -7,8 +7,6 @@ import {
 } from "obsidian";
 import {
   isInVault,
-  wait,
-  waitForResolvedLinks,
 } from "obsidian-community-lib/dist/utils";
 import type { MetaeditApi } from "../interfaces";
 import type BCPlugin from "../main";
@@ -133,18 +131,6 @@ export function getAlt(node: string, plugin: BCPlugin): string | null {
       }
     }
   } else return null;
-}
-
-export async function waitForCache(plugin: BCPlugin) {
-  if (app.plugins.enabledPlugins.has("dataview")) {
-    let basename: string;
-    while (!basename || !app.plugins.plugins.dataview.api.page(basename)) {
-      await wait(100);
-      basename = getCurrFile()?.basename;
-    }
-  } else {
-    await waitForResolvedLinks();
-  }
 }
 
 export const linkClass = (to: string, realQ = true) =>
